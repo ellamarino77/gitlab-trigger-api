@@ -1,18 +1,22 @@
-// server.js
 import express from "express";
 import fetch from "node-fetch";
 import dotenv from "dotenv";
+import cors from "cors";  // Add cors
+
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
+
+// Use CORS middleware
+app.use(cors());
 
 app.use(express.json());
 
 app.post("/trigger", async (req, res) => {
   const GITLAB_TOKEN = process.env.GITLAB_TRIGGER_TOKEN;
-  const GITLAB_PROJECT = process.env.GITLAB_PROJECT_PATH;
-  const REF = process.env.GITLAB_REF || "main";
+  const GITLAB_PROJECT = "teamaxolotls%2Fdevsecopspipeline";
+  const REF = "main";
 
   try {
     const response = await fetch(`https://gitlab.com/api/v4/projects/${GITLAB_PROJECT}/trigger/pipeline`, {
