@@ -19,6 +19,11 @@ app.post("/trigger", async (req, res) => {
   const REF = "main";
 
   try {
+    const body = new URLSearchParams({
+      token: GITLAB_TOKEN,
+      ref: REF,
+      'variables[TRIGGER_SOURCE]': 'Website UI'
+    });
     const response = await fetch(`https://gitlab.com/api/v4/projects/${GITLAB_PROJECT}/trigger/pipeline`, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
